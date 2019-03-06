@@ -1,0 +1,6 @@
+com/bryan/demo/DemoApplication.class
+com/bryan/demo/dal/entity/UserDO.class
+com/bryan/demo/service/UserService.class
+com/bryan/demo/service/impl/UserServiceImpl.class
+com/bryan/demo/controller/MachineInfoController.class
+com/bryan/demo/dal/dao/UserMapper.class

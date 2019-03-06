@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.bryan.demo.dal.dao.UserMapper">
+
+
+    <resultMap id="userMap" type="com.bryan.demo.dal.entity.UserDO">
+        <result property="id" column="id"/>
+        <result property="nick" column="nick"/>
+        <result property="age" column="age"/>
+    </resultMap>
+
+    <sql id="columns" >
+        id, nick, age
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="userMap">
+        SELECT
+        <include refid="columns" />
+        FROM user
+        WHERE id = #{id}
+    </select>
+
+</mapper>

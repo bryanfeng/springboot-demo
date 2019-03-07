@@ -1,6 +1,9 @@
-package com.bryan.demo.dal.entity;
+package com.bryan.demo.common.query;
 
-public class UserDO  {
+import java.io.Serializable;
+import com.bryan.demo.common.util.BaseQuery;
+
+public class UserQuery extends BaseQuery implements Serializable{
 
     /**
      * 主键

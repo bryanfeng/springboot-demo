@@ -1,12 +1,12 @@
-package com.bryan.demo.dal.entity;
+package com.bryan.demo.service.model;
 
-public class UserDO  {
+import java.io.Serializable;
 
-    /**
-     * 主键
-     */
+public class UserBO implements Serializable {
+
+    private static final long serialVersionUID = 8990267856400042482L;
+
     private Long id;
-
     private String nick;
     private int age;
 
@@ -33,4 +33,5 @@ public class UserDO  {
     public void setAge(int age) {
         this.age = age;
     }
+
 }

@@ -62,6 +62,12 @@
 			<version>1.2.52</version>
 		</dependency>
 
+		<!-- 前端的 模版引擎 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
+
 	</dependencies>
 
 

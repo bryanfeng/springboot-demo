@@ -30,8 +30,8 @@ public class UploadServiceImpl implements UploadService {
     @Override
     public UploadFileResponseBO uploadFile(MultipartFile file, String destFilename) {
         UploadFileResponseBO responseBO = new UploadFileResponseBO();
+
         if (file == null || file.isEmpty()) {
-            responseBO.setSuccess(false);
             responseBO.setMessage("传入文件不可为空");
             return responseBO;
         }
@@ -43,24 +43,27 @@ public class UploadServiceImpl implements UploadService {
         try {
 
             file.transferTo(dest);
-            responseBO.setSuccess(true);
 
-            //String imageDownloadUrl = "http://39.105.173.45/cdn/" + fileName;
-            String imageDownloadUrl = "http://39.105.173.45/cdn/pic.JPG";
+            responseBO.setCode("0");
+            String imageDownloadUrl = "http://39.105.173.45/cdn/" + fileName;
+            //String imageDownloadUrl = "http://39.105.173.45/cdn/pic.JPG";
             responseBO.setImgURL(imageDownloadUrl);
+            responseBO.setUrl(imageDownloadUrl);
             responseBO.setDownloadURL(imageDownloadUrl);
             if (destFilename.contains(".")) {
                 responseBO.setFileType(destFilename.split("\\.")[1]);
             }
-            responseBO.setFileName(fileName);
+            responseBO.setName(fileName);
+            responseBO.setSize(file.getSize());
+            responseBO.setCode("0");
             responseBO.setMessage("上传成功");
 
+
         } catch (Exception e) {
-            responseBO.setSuccess(false);
+
             responseBO.setMessage(e.toString());
             logger.error("uploadFile exception: " + e.getMessage());
         }
         return responseBO;
-
     }
 }

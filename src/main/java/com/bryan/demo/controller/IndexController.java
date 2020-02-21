@@ -1,5 +1,6 @@
 package com.bryan.demo.controller;
 
+import com.bryan.demo.service.Util.PropertiesUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,16 @@ public class IndexController {
     @RequestMapping("/debug")
     public String debug(Map<String, Object> map) {
 
-        String cdnPath = "http://192.168.0.8:4444/build/";
+        String debug = PropertiesUtil.getInstance().readPropertiesFile("local-debug");
+
+        String cdnPath = "";
+
+        if(debug.compareTo("true") == 0){
+            cdnPath = "http://192.168.0.8:4444/";
+        }
+        else {
+            cdnPath = "http://39.105.173.45/";
+        }
 
         map.put("jsPath", cdnPath + "js/index.js");
         map.put("cssPath", cdnPath + "css/index.css");

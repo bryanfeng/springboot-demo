@@ -4,56 +4,51 @@ import java.io.Serializable;
 
 public class UploadFileResponseBO implements Serializable {
 
-
     private static final long serialVersionUID = 3635773296348275729L;
 
+    // 文件名
+    String name;
 
-    /*
-     是否上传成功
-     */
-    Boolean success;
+    // 0 为正常 必须
+    String code;
 
-    /*
-     success=false 时候可以展示错误
-     */
+    // 大小（字节，非必须）
+    Long size;
+
+    // 服务端响应内容
     String message;
 
     /*
-     返回格式 （jpg/txt）
+    url 三合一，ice都需要
+    */
+    String url;
+    String imgURL;
+    String downloadURL;
+
+    /*
+     返回格式 （jpg/txt）(自己加的 )
      */
     String fileType;
 
-    /*
-     返回文件名
-     */
-    String fileName;
 
-    /*
-    图片url
-    */
-    String imgURL;
-
-    /*
-     下载url
-     */
-    String downloadURL;
-
-
-    public Boolean getSuccess() {
-        return success;
+    public String getName() {
+        return name;
     }
 
-    public void setSuccess(Boolean success) {
-        this.success = success;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getMessage() {
-        return message;
+
+
+    public Long getSize() {
+        return size;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setSize(Long size) {
+        this.size = size;
     }
+
 
 
     public String getImgURL() {
@@ -72,6 +67,8 @@ public class UploadFileResponseBO implements Serializable {
         this.downloadURL = downloadURL;
     }
 
+
+
     public String getFileType() {
         return fileType;
     }
@@ -80,11 +77,28 @@ public class UploadFileResponseBO implements Serializable {
         this.fileType = fileType;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getUrl() {
+        return url;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
+

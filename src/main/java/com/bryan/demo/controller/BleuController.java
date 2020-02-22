@@ -55,6 +55,45 @@ public class BleuController {
         }
         return result;
     }
+	
+	// 中文切词
+    // http://127.0.0.1:8080/bleu/segment?source=abc%E4%BB%8A%E5%A4%A9%E5%A4%A9%E6%B0%94%E4%B8%8D%E9%94%99,%E6%88%91%E4%BB%AC%E4%B8%8B%E5%8D%88%E6%B2%A1%E6%9C%89class%E3%80%82%EF%BC%88%E8%BF%99%E6%98%AF%E7%AC%AC12%E5%A4%A9%EF%BC%89
+    @RequestMapping("/segment")
+    public Result<String> segmentWord(String source) {
+        Result result = new Result();
+
+        if (source == null || source.isEmpty()) {
+            result.setMsg("参数传入为空");
+            return result;
+        }
+
+        StringBuffer seg = new StringBuffer();
+
+        /***
+         * ^[\u2E80-\u9FFF]+$ 匹配所有东亚区的语言 ^[\u4E00-\u9FFF]+$ 匹配简体和繁体
+         * ^[\u4E00-\u9FA5]+$ 匹配简体
+         */
+        String regExp = "^[\u4E00-\u9FFF]+$";
+
+        int i = 0;
+        for (i = 0; i < source.length()-1; i++) {
+            String c = String.valueOf(source.charAt(i));
+            String next = String.valueOf(source.charAt(i+1));
+
+            seg.append(c);
+
+            if (next.matches("[\u4E00-\u9FA5]+") || c.matches("[\u4E00-\u9FA5]+")){
+                seg.append(" ");
+            }
+        }
+        seg.append(source.charAt(i));
+
+        result.setData(seg);
+        result.setSuccess(true);
+
+        return result;
+    }
+
 
 
 

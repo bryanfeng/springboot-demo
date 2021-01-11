@@ -14,11 +14,85 @@
         id, nick, age
     </sql>
 
-    <select id="findById" parameterType="java.lang.Long" resultMap="userMap">
+
+
+    <!-- 增 -->
+    <insert id="add" parameterType="com.bryan.demo.dal.entity.UserDO">
+        <selectKey keyProperty="id" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user(nick, age) values(#{nick},#{age})
+    </insert>
+
+    <!-- 删 -->
+    <delete id="delById" parameterType="java.lang.Long">
+        delete from user where id = #{id}
+    </delete>
+
+    <!-- 改 -->
+    <update id="update" parameterType="com.bryan.demo.dal.entity.UserDO">
+        update user
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="nick != null">
+                nick = #{nick},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 查 -->
+    <select id="getById" parameterType="java.lang.Long" resultMap="userMap">
         SELECT
         <include refid="columns" />
         FROM user
         WHERE id = #{id}
+    </select>
+
+    <!-- 查全部 -->
+    <select id="queryAll" resultMap="userMap">
+        SELECT
+        <include refid="columns" />
+        FROM user
+    </select>
+
+
+    <!-- 分页查 -->
+    <select id="getPageByQuery" parameterType="com.bryan.demo.common.query.UserQuery" resultMap="userMap">
+        select
+        <include refid="columns" />
+        from user
+        <include refid="queryParams" />
+        order by id
+        <if test="size!=null">
+            <![CDATA[limit #{start}, #{size}]]>
+        </if>
+    </select>
+
+    <!-- 条件查询使用 -->
+    <sql id="queryParams">
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="nick != null  and nick != ''">
+                and nick like CONCAT('%', #{nick}, '%')
+            </if>
+            <if test="age != null and age != 0 ">
+                and age = #{age}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 条件查数量 -->
+    <select id="getCountByQuery" parameterType="com.bryan.demo.common.query.UserQuery" resultType="java.lang.Integer">
+        SELECT COUNT(id) AS num FROM user
+        <include refid="queryParams"/>
     </select>
 
 </mapper>

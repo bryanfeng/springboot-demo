@@ -1,15 +1,12 @@
 package com.bryan.demo.controller;
 
 import com.bryan.demo.common.util.Result;
-import com.bryan.demo.service.UploadService;
-import com.bryan.demo.service.model.UploadFileResponseBO;
+import com.bryan.demo.service.VisitService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +16,8 @@ public class InfoController {
 
     private static Log logger = LogFactory.getLog(InfoController.class);
 
-
+    @Autowired
+    VisitService visitService;
 
     @RequestMapping("/ip")
     public Result getIp(HttpServletRequest request) {
@@ -80,9 +78,17 @@ public class InfoController {
 //            }
         }
         ip = "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
+
+        visitService.add(ip);
+
         result.setData(ip);
         result.setSuccess(true);
         return result;
+    }
+
+    @RequestMapping("/visit")
+    public Result getAllVisit() {
+        return visitService.queryAll();
     }
 
 }
